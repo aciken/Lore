@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, ScrollView, TouchableOpacity } from 'react-native';
+import { View, Text, ScrollView, TouchableOpacity, Image } from 'react-native';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -39,7 +39,7 @@ export default function AdventureDetails() {
           return (
             <TouchableOpacity
               key={quest.id}
-              disabled={isLocked}
+              disabled={isLocked && !isActive}
               onPress={() => {
                 const questData = {
                   ...quest,
@@ -55,27 +55,16 @@ export default function AdventureDetails() {
               style={{
                 alignItems: 'center',
                 marginBottom: 30,
-                opacity: isLocked ? 0.5 : 1,
+                opacity: isLocked && !isActive ? 0.5 : 1,
               }}
             >
-              <View
-                style={{
-                  width: 80,
-                  height: 80,
-                  borderRadius: 40,
-                  backgroundColor: isActive ? '#00DDFF' : (isCompleted ? '#76FF03' : '#1e2747'),
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  borderWidth: 4,
-                  borderColor: isActive ? 'rgba(0, 221, 255, 0.5)' : (isCompleted ? 'rgba(118, 255, 3, 0.5)' : '#141a2f'),
-                  shadowColor: isActive ? '#00DDFF' : (isCompleted ? '#76FF03' : '#000'),
-                  shadowOffset: { width: 0, height: 4 },
-                  shadowOpacity: isActive || isCompleted ? 0.6 : 0,
-                  shadowRadius: 10,
-                }}
-              >
-                <Ionicons name={getIconForQuest(quest)} size={36} color={isActive ? '#0C1126' : '#FFFFFF'} />
-              </View>
+              {isActive ? (
+                <Image source={require('../../assets/buttonBlueToday.png')} style={{ width: 80, height: 80 }} />
+              ) : isLocked ? (
+                <Image source={require('../../assets/buttonFinish.png')} style={{ width: 80, height: 80 }} />
+              ) : (
+                <Image source={require('../../assets/buttonBlueBefore.png')} style={{ width: 80, height: 80 }} />
+              )}
               <Text style={{ color: '#FFFFFF', fontWeight: 'bold', marginTop: 8, fontSize: 16 }}>
                 {quest.title}
               </Text>

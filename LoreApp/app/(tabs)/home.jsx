@@ -46,6 +46,39 @@ export default function HomeScreen() {
     }
   ];
 
+  const dailyAdventures = [
+    {
+      id: 'daily-1',
+      title: 'Urban Exploration',
+      section: 'DOWNTOWN DISTRICT, ZONE A',
+      image: 'CityImage.png',
+      quests: [
+        { id: 'dq1-1', title: 'Find the tallest skyscraper', type: 'quest', status: 'active' },
+        { id: 'dq1-2', title: 'Visit the central park', type: 'quest', status: 'locked' },
+      ]
+    },
+    {
+      id: 'daily-2',
+      title: 'Rooftop Run',
+      section: 'SKYLINE PEAK, ZONE B',
+      image: 'ParkourImage.png',
+      quests: [
+        { id: 'dq2-1', title: 'Leap across the twin towers', type: 'quest', status: 'active' },
+        { id: 'dq2-2', title: 'Slide down the glass pyramid', type: 'quest', status: 'locked' },
+      ]
+    },
+    {
+      id: 'daily-3',
+      title: 'Cliffside Challenge',
+      section: 'JAGGED COAST, ZONE C',
+      image: 'RockImage.png',
+      quests: [
+        { id: 'dq3-1', title: 'Climb the sheer rock face', type: 'quest', status: 'active' },
+        { id: 'dq3-2', title: 'Discover the sea cave', type: 'quest', status: 'locked' },
+      ]
+    }
+  ];
+
   const router = useRouter();
 
   const getAdventureImage = (imageName) => {
@@ -54,6 +87,9 @@ export default function HomeScreen() {
       case 'ForestImage.png': return require('../../assets/ForestImage.png');
       case 'MountainImage.png': return require('../../assets/MountainImage.png');
       case 'CarImage.png': return require('../../assets/CarImage.png');
+      case 'CityImage.png': return require('../../assets/CityImage.png');
+      case 'ParkourImage.png': return require('../../assets/ParkourImage.png');
+      case 'RockImage.png': return require('../../assets/RockImage.png');
       default: return require('../../assets/icon.png');
     }
   };
@@ -281,236 +317,66 @@ export default function HomeScreen() {
             showsHorizontalScrollIndicator={false}
             contentContainerStyle={{ paddingLeft: 20, paddingRight: 12 }}
           >
-            {/* Daily Challenge 1 */}
-            <TouchableOpacity
-              style={{
-                width: 220,
-                marginRight: 20,
-                height: 140,
-                shadowColor: "#76FF03",
-                shadowOffset: {
-                  width: 0,
-                  height: 5,
-                },
-                shadowOpacity: 0.2,
-                shadowRadius: 8,
-                elevation: 6,
-                transform: [{ rotate: '1deg' }],
-              }}
-            >
-              <LinearGradient
-                colors={['rgba(42, 52, 85, 0.95)', 'rgba(30, 39, 71, 0.95)']}
+            {dailyAdventures.map((adventure, index) => (
+              <TouchableOpacity
+                key={adventure.id}
+                onPress={() => {
+                  const firstQuest = adventure.quests[0];
+                  if (firstQuest) {
+                    const questData = {
+                      ...firstQuest,
+                      adventureTitle: adventure.title,
+                      section: adventure.section,
+                      image: adventure.image,
+                      duration: '10 mins',
+                      difficulty: 'Easy',
+                      progress: 0,
+                    };
+                    router.push({ pathname: '/modal/startAdventure', params: questData });
+                  }
+                }}
                 style={{
-                  borderRadius: 20,
-                  overflow: 'hidden',
-                  borderWidth: 2,
-                  borderColor: 'rgba(118, 255, 3, 0.4)',
-                  padding: 16,
-                  height: '100%',
+                  width: 220,
+                  marginRight: 20,
+                  height: 140,
                 }}
               >
-                <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 8 }}>
-                  <View style={{
-                    backgroundColor: 'rgba(118, 255, 3, 0.2)',
-                    paddingVertical: 4,
-                    paddingHorizontal: 8,
-                    borderRadius: 10
-                  }}>
-                    <Text style={{ color: '#76FF03', fontSize: 12, fontWeight: 'bold' }}>FOREST REALM</Text>
-                  </View>
-                </View>
-                
-                <Text style={{ 
-                  color: '#FFFFFF', 
-                  fontSize: 18, 
-                  fontWeight: 'bold',
-                  marginBottom: 8
-                }}>
-                  Explore Mystery Cave
-                </Text>
-                
-                <View style={{ 
-                  height: 10, 
-                  backgroundColor: 'rgba(42, 52, 85, 0.6)',
-                  borderRadius: 5,
-                  marginTop: 8,
-                  marginBottom: 8,
-                  width: '100%',
-                  padding: 2,
-                  overflow: 'hidden',
-                  borderWidth: 1,
-                  borderColor: 'rgba(255, 255, 255, 0.1)',
-                }}>
+                <ImageBackground
+                  source={getAdventureImage(adventure.image)}
+                  style={{
+                    flex: 1,
+                    borderRadius: 20,
+                    overflow: 'hidden',
+                    borderWidth: 2,
+                    borderColor: 'rgba(118, 255, 3, 0.4)',
+                  }}
+                  imageStyle={{ borderRadius: 18 }}
+                >
                   <LinearGradient
-                    colors={['#76FF03', '#CCFF90']}
-                    style={{ 
-                      height: '100%', 
-                      width: '33%', 
-                      borderRadius: 3,
+                    colors={['rgba(0,0,0,0.1)', 'rgba(0,0,0,0.7)']}
+                    style={{
+                      flex: 1,
+                      padding: 16,
+                      justifyContent: 'space-between',
                     }}
-                  />
-                </View>
-                
-                <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-                  <Text style={{ color: '#B3B8C8', fontSize: 14 }}>2 hours left</Text>
-                  <Text style={{ color: '#76FF03', fontSize: 14, fontWeight: 'bold' }}>+50 XP</Text>
-                </View>
-              </LinearGradient>
-            </TouchableOpacity>
-            
-            {/* Daily Challenge 2 */}
-            <TouchableOpacity
-              style={{
-                width: 220,
-                marginRight: 20,
-                height: 140,
-                shadowColor: "#00DDFF",
-                shadowOffset: {
-                  width: 0,
-                  height: 5,
-                },
-                shadowOpacity: 0.2,
-                shadowRadius: 8,
-                elevation: 6,
-                transform: [{ rotate: '-1deg' }],
-              }}
-            >
-              <LinearGradient
-                colors={['rgba(30, 39, 71, 0.95)', 'rgba(20, 26, 47, 0.95)']}
-                style={{
-                  borderRadius: 20,
-                  overflow: 'hidden',
-                  borderWidth: 2,
-                  borderColor: 'rgba(0, 221, 255, 0.4)',
-                  padding: 16,
-                  height: '100%',
-                }}
-              >
-                <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 8 }}>
-                  <View style={{
-                    backgroundColor: 'rgba(0, 221, 255, 0.2)',
-                    paddingVertical: 4,
-                    paddingHorizontal: 8,
-                    borderRadius: 10
-                  }}>
-                    <Text style={{ color: '#00DDFF', fontSize: 12, fontWeight: 'bold' }}>MOUNTAIN REALM</Text>
-                  </View>
-                </View>
-                
-                <Text style={{ 
-                  color: '#FFFFFF', 
-                  fontSize: 18, 
-                  fontWeight: 'bold',
-                  marginBottom: 8
-                }}>
-                  Climb Mountain Peak
-                </Text>
-                
-                <View style={{ 
-                  height: 10, 
-                  backgroundColor: 'rgba(42, 52, 85, 0.6)',
-                  borderRadius: 5,
-                  marginTop: 8,
-                  marginBottom: 8,
-                  width: '100%',
-                  padding: 2,
-                  overflow: 'hidden',
-                  borderWidth: 1,
-                  borderColor: 'rgba(255, 255, 255, 0.1)',
-                }}>
-                  <LinearGradient
-                    colors={['#00DDFF', '#00AAD4']}
-                    style={{ 
-                      height: '100%', 
-                      width: '20%', 
-                      borderRadius: 3,
-                    }}
-                  />
-                </View>
-                
-                <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-                  <Text style={{ color: '#B3B8C8', fontSize: 14 }}>1 day left</Text>
-                  <Text style={{ color: '#00DDFF', fontSize: 14, fontWeight: 'bold' }}>+100 XP</Text>
-                </View>
-              </LinearGradient>
-            </TouchableOpacity>
-            
-            {/* Weekly Challenge */}
-            <TouchableOpacity
-              style={{
-                width: 220,
-                marginRight: 20,
-                height: 140,
-                shadowColor: "#FF9500",
-                shadowOffset: {
-                  width: 0,
-                  height: 5,
-                },
-                shadowOpacity: 0.2,
-                shadowRadius: 8,
-                elevation: 6,
-                transform: [{ rotate: '1deg' }],
-              }}
-            >
-              <LinearGradient
-                colors={['rgba(42, 52, 85, 0.95)', 'rgba(30, 39, 71, 0.95)']}
-                style={{
-                  borderRadius: 20,
-                  overflow: 'hidden',
-                  borderWidth: 2,
-                  borderColor: 'rgba(255, 149, 0, 0.4)',
-                  padding: 16,
-                  height: '100%',
-                }}
-              >
-                <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 8 }}>
-                  <View style={{
-                    backgroundColor: 'rgba(255, 149, 0, 0.2)',
-                    paddingVertical: 4,
-                    paddingHorizontal: 8,
-                    borderRadius: 10
-                  }}>
-                    <Text style={{ color: '#FF9500', fontSize: 12, fontWeight: 'bold' }}>MYSTIC MINES</Text>
-                  </View>
-                </View>
-                
-                <Text style={{ 
-                  color: '#FFFFFF', 
-                  fontSize: 18, 
-                  fontWeight: 'bold',
-                  marginBottom: 8
-                }}>
-                  Complete Graphit Adventure
-                </Text>
-                
-                <View style={{ 
-                  height: 10, 
-                  backgroundColor: 'rgba(42, 52, 85, 0.6)',
-                  borderRadius: 5,
-                  marginTop: 8,
-                  marginBottom: 8,
-                  width: '100%',
-                  padding: 2,
-                  overflow: 'hidden',
-                  borderWidth: 1,
-                  borderColor: 'rgba(255, 255, 255, 0.1)',
-                }}>
-                  <LinearGradient
-                    colors={['#FF9500', '#FFA500']}
-                    style={{ 
-                      height: '100%', 
-                      width: '30%', 
-                      borderRadius: 3,
-                    }}
-                  />
-                </View>
-                
-                <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-                  <Text style={{ color: '#B3B8C8', fontSize: 14 }}>30% complete</Text>
-                  <Text style={{ color: '#FF9500', fontSize: 14, fontWeight: 'bold' }}>+200 XP</Text>
-                </View>
-              </LinearGradient>
-            </TouchableOpacity>
+                  >
+                    <View>
+                      <Text style={{ color: '#FFFFFF', fontSize: 18, fontWeight: 'bold' }}>{adventure.title}</Text>
+                      <Text style={{ color: '#B3B8C8', fontSize: 12 }}>{adventure.section}</Text>
+                    </View>
+                    <View style={{
+                      backgroundColor: 'rgba(118, 255, 3, 0.8)',
+                      paddingVertical: 6,
+                      paddingHorizontal: 12,
+                      borderRadius: 16,
+                      alignSelf: 'flex-start',
+                    }}>
+                      <Text style={{ color: '#0C1126', fontSize: 12, fontWeight: 'bold' }}>Activate</Text>
+                    </View>
+                  </LinearGradient>
+                </ImageBackground>
+              </TouchableOpacity>
+            ))}
           </ScrollView>
         </View>
         

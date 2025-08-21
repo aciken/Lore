@@ -16,6 +16,9 @@ export default function StartAdventure() {
       case 'ForestImage.png': return require('../../assets/ForestImage.png');
       case 'MountainImage.png': return require('../../assets/MountainImage.png');
       case 'CarImage.png': return require('../../assets/CarImage.png');
+      case 'CityImage.png': return require('../../assets/CityImage.png');
+      case 'ParkourImage.png': return require('../../assets/ParkourImage.png');
+      case 'RockImage.png': return require('../../assets/RockImage.png');
       default: return require('../../assets/icon.png');
     }
   };
