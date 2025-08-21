@@ -4,6 +4,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';
 import { useGlobalContext } from '../context/GlobalProvider';
+import StyledButton from '../../components/StyledButton';
 
 export default function HomeScreen() {
   const { selectedAdventure, setSelectedAdventure } = useGlobalContext();
@@ -52,6 +53,7 @@ export default function HomeScreen() {
       title: 'Urban Exploration',
       section: 'DOWNTOWN DISTRICT, ZONE A',
       image: 'CityImage.png',
+      timeLeft: '2 hours left',
       quests: [
         { id: 'dq1-1', title: 'Find the tallest skyscraper', type: 'quest', status: 'active' },
         { id: 'dq1-2', title: 'Visit the central park', type: 'quest', status: 'locked' },
@@ -62,6 +64,7 @@ export default function HomeScreen() {
       title: 'Rooftop Run',
       section: 'SKYLINE PEAK, ZONE B',
       image: 'ParkourImage.png',
+      timeLeft: '8 hours left',
       quests: [
         { id: 'dq2-1', title: 'Leap across the twin towers', type: 'quest', status: 'active' },
         { id: 'dq2-2', title: 'Slide down the glass pyramid', type: 'quest', status: 'locked' },
@@ -72,6 +75,7 @@ export default function HomeScreen() {
       title: 'Cliffside Challenge',
       section: 'JAGGED COAST, ZONE C',
       image: 'RockImage.png',
+      timeLeft: '1 day left',
       quests: [
         { id: 'dq3-1', title: 'Climb the sheer rock face', type: 'quest', status: 'active' },
         { id: 'dq3-2', title: 'Discover the sea cave', type: 'quest', status: 'locked' },
@@ -125,24 +129,29 @@ export default function HomeScreen() {
           </Text>
         </View>
         
-        <View style={{ 
-          flexDirection: 'row', 
-          alignItems: 'center', 
-          backgroundColor: 'rgba(30, 39, 71, 0.9)',
+        <View style={{
+          flexDirection: 'row',
+          alignItems: 'center',
+          backgroundColor: '#1E2747',
           paddingVertical: 8,
           paddingHorizontal: 14,
           borderRadius: 20,
           borderWidth: 1,
-          borderColor: 'rgba(255, 149, 0, 0.3)'
+          borderColor: 'rgba(255, 149, 0, 0.5)',
+          shadowColor: "#FF9500",
+          shadowOffset: { width: 0, height: 2 },
+          shadowOpacity: 0.2,
+          shadowRadius: 4,
+          elevation: 5,
         }}>
           <Image
             source={require('../../assets/FireImage.png')}
             style={{ width: 26, height: 26 }}
           />
-          <Text style={{ 
-            color: '#FFFFFF', 
-            fontWeight: 'bold', 
-            marginLeft: 6, 
+          <Text style={{
+            color: '#FFFFFF',
+            fontWeight: 'bold',
+            marginLeft: 8,
             fontSize: 16
           }}>1</Text>
         </View>
@@ -279,9 +288,9 @@ export default function HomeScreen() {
           }}>
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
               <Ionicons 
-                name="calendar" 
+                name="map" 
                 size={24} 
-                color="#76FF03"
+                color="#00DDFF"
                 style={{ marginRight: 8 }}
               />
               <Text style={{ 
@@ -292,24 +301,7 @@ export default function HomeScreen() {
                 Daily Adventures
               </Text>
             </View>
-            <TouchableOpacity 
-              style={{ 
-                backgroundColor: 'rgba(118, 255, 3, 0.15)', 
-                paddingVertical: 6,
-                paddingHorizontal: 12, 
-                borderRadius: 16,
-                borderWidth: 1,
-                borderColor: 'rgba(118, 255, 3, 0.3)'
-              }}
-            >
-              <Text style={{ 
-                color: '#76FF03', 
-                fontSize: 14, 
-                fontWeight: 'bold' 
-              }}>
-                View All
-              </Text>
-            </TouchableOpacity>
+            <StyledButton title="View All" color="blue" />
           </View>
           
           <ScrollView
@@ -348,7 +340,7 @@ export default function HomeScreen() {
                     borderRadius: 20,
                     overflow: 'hidden',
                     borderWidth: 2,
-                    borderColor: 'rgba(118, 255, 3, 0.4)',
+                    borderColor: 'rgba(255, 255, 255, 0.3)',
                   }}
                   imageStyle={{ borderRadius: 18 }}
                 >
@@ -362,16 +354,16 @@ export default function HomeScreen() {
                   >
                     <View>
                       <Text style={{ color: '#FFFFFF', fontSize: 18, fontWeight: 'bold' }}>{adventure.title}</Text>
-                      <Text style={{ color: '#B3B8C8', fontSize: 12 }}>{adventure.section}</Text>
+                      <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 4 }}>
+                        <Ionicons name="time-outline" size={14} color="#B3B8C8" style={{ marginRight: 4 }}/>
+                        <Text style={{ color: '#B3B8C8', fontSize: 12 }}>{adventure.timeLeft}</Text>
+                      </View>
                     </View>
-                    <View style={{
-                      backgroundColor: 'rgba(118, 255, 3, 0.8)',
-                      paddingVertical: 6,
-                      paddingHorizontal: 12,
-                      borderRadius: 16,
-                      alignSelf: 'flex-start',
-                    }}>
-                      <Text style={{ color: '#0C1126', fontSize: 12, fontWeight: 'bold' }}>Activate</Text>
+                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                      <Ionicons name="star-outline" size={16} color="#FFCC00" style={{ marginRight: 6 }}/>
+                      <Text style={{ color: '#FFFFFF', fontSize: 14, fontWeight: '500' }}>
+                        {adventure.quests[0].title}
+                      </Text>
                     </View>
                   </LinearGradient>
                 </ImageBackground>
@@ -404,24 +396,7 @@ export default function HomeScreen() {
                 Possible Adventures
               </Text>
             </View>
-            <TouchableOpacity 
-              style={{ 
-                backgroundColor: 'rgba(0, 221, 255, 0.15)', 
-                paddingVertical: 6,
-                paddingHorizontal: 12, 
-                borderRadius: 16,
-                borderWidth: 1,
-                borderColor: 'rgba(0, 221, 255, 0.3)'
-              }}
-            >
-              <Text style={{ 
-                color: '#00DDFF', 
-                fontSize: 14, 
-                fontWeight: 'bold' 
-              }}>
-                See All
-              </Text>
-            </TouchableOpacity>
+            <StyledButton title="See All" color="blue" />
           </View>
 
           <ScrollView
@@ -460,7 +435,7 @@ export default function HomeScreen() {
                     height: '100%',
                     width: '100%',
                     borderWidth: 2,
-                    borderColor: 'rgba(118, 255, 3, 0.5)',
+                    borderColor: 'rgba(255, 255, 255, 0.3)',
                     overflow: 'hidden',
                   }}
                   imageStyle={{ 
