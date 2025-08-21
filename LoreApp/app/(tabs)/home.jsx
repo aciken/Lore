@@ -171,109 +171,134 @@ export default function HomeScreen() {
               marginTop: 8,
               marginHorizontal: 20,
               marginBottom: 24,
-              shadowColor: '#FFFFFF',
-              shadowOffset: { width: 0, height: 8 },
-              shadowOpacity: 0.4,
-              shadowRadius: 16,
-              elevation: 16,
-              transform: [{ scale: 1.02 }]
+              transform: [{ scale: 1.02 }],
             }}
           >
-            <ImageBackground
-              source={getAdventureImage(selectedAdventure.image)}
-              style={{
-                borderRadius: 20,
-                overflow: 'hidden',
-                borderWidth: 1,
-                borderColor: 'rgba(255, 255, 255, 0.3)',
-              }}
-              imageStyle={{ borderRadius: 20 }}
-            >
-              <LinearGradient
-                colors={['rgba(42, 52, 85, 0.7)', 'rgba(30, 39, 71, 0.7)']}
-                style={{ 
-                  padding: 20,
-                  alignItems: 'center',
-                  flexDirection: 'row',
-                  height: 120,
+            <View style={{
+              backgroundColor: '#004C6D',
+              borderRadius: 20,
+            }}>
+              <ImageBackground
+                source={getAdventureImage(selectedAdventure.image)}
+                style={{
+                  borderRadius: 20,
+                  overflow: 'hidden',
+                  borderWidth: 1,
+                  borderColor: 'rgba(255, 255, 255, 0.3)',
+                  transform: [{ translateY: -5 }]
                 }}
+                imageStyle={{ borderRadius: 20, opacity: 1 }}
               >
-                <View style={{ 
-                  height: 70, 
-                  width: 70, 
-                  borderRadius: 35, 
-                  backgroundColor: '#FFCC00',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  marginRight: 16,
-                  borderWidth: 2,
-                  borderColor: 'rgba(255, 204, 0, 0.5)',
-                  transform: [{rotate: '-5deg'}]
-                }}>
-                  <Ionicons name="map" size={34} color="#1C2230" />
-                </View>
-                <View style={{ flex: 1 }}>
-                  <Text style={{ 
-                    color: '#FFFFFF', 
-                    fontSize: 22, 
-                    fontWeight: 'bold',
-                  }}>
-                    Active Quest: {selectedAdventure.title}
-                  </Text>
-                  <View style={{ 
-                    height: 14, 
-                    backgroundColor: 'rgba(42, 52, 85, 0.6)',
-                    borderRadius: 7,
-                    marginTop: 12,
-                    width: '100%',
-                    padding: 2,
-                    overflow: 'hidden',
-                    borderWidth: 1,
-                    borderColor: 'rgba(255, 255, 255, 0.1)',
-                  }}>
-                    <LinearGradient
-                      colors={['#76FF03', '#CCFF90']}
-                      style={{ 
-                        height: '100%', 
-                        width: `${selectedAdventure.progress * 100}%`, 
-                        borderRadius: 5,
-                      }}
-                    />
+                <LinearGradient
+                  colors={['rgba(12, 17, 38, 0.6)', 'rgba(12, 17, 38, 0.9)']}
+                  style={{ 
+                    padding: 20,
+                    height: 140,
+                    justifyContent: 'space-between',
+                  }}
+                >
+                  <View>
+                    <Text style={{ 
+                      color: '#B3B8C8', 
+                      fontSize: 14, 
+                      fontWeight: '500',
+                      textShadowColor: 'rgba(0, 0, 0, 0.5)',
+                      textShadowOffset: { width: 0, height: 1 },
+                      textShadowRadius: 2,
+                    }}>
+                      {selectedAdventure.adventureTitle}
+                    </Text>
+                    <Text style={{ 
+                      color: '#FFFFFF', 
+                      fontSize: 20, 
+                      fontWeight: 'bold',
+                      textShadowColor: 'rgba(0, 0, 0, 0.5)',
+                      textShadowOffset: { width: 0, height: 1 },
+                      textShadowRadius: 3,
+                    }}>
+                      {selectedAdventure.title}
+                    </Text>
                   </View>
-                  <Text style={{ 
-                    color: '#B3B8C8', 
-                    fontSize: 15, 
-                    marginTop: 8,
-                    fontWeight: '500'
-                  }}>
-                    From: {selectedAdventure.adventureTitle}
-                  </Text>
-                </View>
-              </LinearGradient>
-            </ImageBackground>
+
+                  <View>
+                    <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 4 }}>
+                      <Text style={{ color: '#B3B8C8', fontSize: 12 }}>PROGRESS</Text>
+                      <Text style={{ color: '#FFFFFF', fontSize: 12, fontWeight: 'bold' }}>
+                        {Math.round(selectedAdventure.progress * 100)}%
+                      </Text>
+                    </View>
+                    <View style={{ 
+                      height: 10, 
+                      backgroundColor: 'rgba(0, 0, 0, 0.3)',
+                      borderRadius: 5,
+                      overflow: 'hidden',
+                      borderWidth: 1,
+                      borderColor: 'rgba(255, 255, 255, 0.1)',
+                    }}>
+                      <LinearGradient
+                        colors={['#76FF03', '#CCFF90']}
+                        style={{ 
+                          height: '100%', 
+                          width: `${selectedAdventure.progress * 100}%`, 
+                          borderRadius: 5,
+                        }}
+                      />
+                    </View>
+                  </View>
+                </LinearGradient>
+              </ImageBackground>
+            </View>
           </TouchableOpacity>
         ) : (
           <View style={{
-            marginHorizontal: 20,
-            borderRadius: 20,
-            backgroundColor: 'rgba(30, 39, 71, 0.7)',
-            padding: 20,
             marginTop: 8,
+            marginHorizontal: 20,
             marginBottom: 24,
-            alignItems: 'center',
-            justifyContent: 'center',
-            height: 120,
-            borderWidth: 1,
-            borderColor: 'rgba(255, 255, 255, 0.2)',
-            borderStyle: 'dashed'
           }}>
-            <Ionicons name="map-outline" size={32} color="#B3B8C8" />
-            <Text style={{ color: '#FFFFFF', fontSize: 18, fontWeight: 'bold', marginTop: 8 }}>
-              No adventure selected
-            </Text>
-            <Text style={{ color: '#B3B8C8', fontSize: 14, marginTop: 4 }}>
-              Choose one from the list below!
-            </Text>
+            <LinearGradient
+              colors={['#006C8D', '#0A0F24']}
+              style={{ borderRadius: 20 }}
+            >
+              <LinearGradient
+                colors={['#1e2747', '#141a2f']}
+                style={{
+                  borderRadius: 20,
+                  padding: 20,
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  height: 140,
+                  transform: [{ translateY: -5 }],
+                  overflow: 'hidden',
+                }}
+              >
+                <Ionicons
+                  name="compass-outline"
+                  size={120}
+                  color="rgba(0, 221, 255, 0.1)"
+                  style={{ position: 'absolute' }}
+                />
+                <Text style={{ 
+                  color: '#FFFFFF', 
+                  fontSize: 20, 
+                  fontWeight: 'bold',
+                  textShadowColor: 'rgba(0, 0, 0, 0.7)',
+                  textShadowOffset: { width: 0, height: 1 },
+                  textShadowRadius: 3,
+                }}>
+                  Select an Adventure
+                </Text>
+                <Text style={{ 
+                  color: '#B3B8C8', 
+                  fontSize: 14, 
+                  marginTop: 4,
+                  textShadowColor: 'rgba(0, 0, 0, 0.7)',
+                  textShadowOffset: { width: 0, height: 1 },
+                  textShadowRadius: 2,
+                }}>
+                  A new story awaits.
+                </Text>
+              </LinearGradient>
+            </LinearGradient>
           </View>
         )}
         
