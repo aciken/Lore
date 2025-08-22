@@ -17,6 +17,8 @@ import { Ionicons } from '@expo/vector-icons';
 import { useGlobalContext } from '../context/GlobalProvider';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
+import { LinearGradient } from 'expo-linear-gradient';
+import { useLocalSearchParams } from 'expo-router';
 
 
 // Temporarily comment out AsyncStorage if not installed
@@ -26,6 +28,7 @@ import axios from 'axios';
 // import axios from 'axios';
 
 export default function Signup() {
+  const params = useLocalSearchParams();
   // Remove GlobalContext reference temporarily
   // const { setUser } = useGlobalContext();
     const { setError, setIsAuthenticated, setUser, isAuthenticated } = useGlobalContext();
@@ -152,7 +155,8 @@ export default function Signup() {
     // --- If all validation passes, proceed with API call ---
     console.log("Validation passed, attempting sign up...");
     try {
-      const response = await axios.put('https://4c922cd8e3b6.ngrok-free.app/signup', { // Ensure URL is correct
+      const response = await axios.put('https://ad35575f59ce.ngrok-free.app/signup', { // Ensure URL is correct
+        username: params.username,
         name: name.trim(), // Send trimmed name
         email: email.trim(), // Send trimmed email
         password // Send original password
@@ -331,16 +335,25 @@ export default function Signup() {
             {/* Sign Up Button */}
             <TouchableOpacity 
               style={{
-                backgroundColor: '#00DDFF',
-                paddingVertical: 16,
-                borderRadius: 30,
-                marginBottom: 24
+                marginBottom: 24,
+                width: '100%',
               }}
               onPress={handleSignUp}
             >
-              <Text style={{ color: '#0C1126', textAlign: 'center', fontSize: 18, fontWeight: 'bold' }}>
-                Create Account
-              </Text>
+              <View style={{ backgroundColor: '#006C8D', borderRadius: 30 }}>
+                <LinearGradient
+                  colors={['#00DDFF', '#00AADD']}
+                  style={{
+                    paddingVertical: 16,
+                    borderRadius: 30,
+                    transform: [{ translateY: -6 }],
+                  }}
+                >
+                  <Text style={{ color: '#0C1126', textAlign: 'center', fontSize: 18, fontWeight: 'bold' }}>
+                    Create Account
+                  </Text>
+                </LinearGradient>
+              </View>
             </TouchableOpacity>
             
             {/* Divider */}

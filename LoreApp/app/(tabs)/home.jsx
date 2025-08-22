@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, SafeAreaView, StatusBar, ScrollView, Image, TouchableOpacity, ImageBackground } from 'react-native';
+import { View, Text, SafeAreaView, StatusBar, ScrollView, Image, TouchableOpacity, ImageBackground, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';
@@ -129,31 +129,19 @@ export default function HomeScreen() {
           </Text>
         </View>
         
-        <View style={{
-          flexDirection: 'row',
-          alignItems: 'center',
-          backgroundColor: '#1E2747',
-          paddingVertical: 8,
-          paddingHorizontal: 14,
-          borderRadius: 20,
-          borderWidth: 1,
-          borderColor: 'rgba(255, 149, 0, 0.5)',
-          shadowColor: "#FF9500",
-          shadowOffset: { width: 0, height: 2 },
-          shadowOpacity: 0.2,
-          shadowRadius: 4,
-          elevation: 5,
-        }}>
-          <Image
-            source={require('../../assets/FireImage.png')}
-            style={{ width: 26, height: 26 }}
-          />
-          <Text style={{
-            color: '#FFFFFF',
-            fontWeight: 'bold',
-            marginLeft: 8,
-            fontSize: 16
-          }}>1</Text>
+        <View style={styles.streakShadow}>
+          <LinearGradient
+            colors={['#4c321e', '#1E2747']}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 1 }}
+            style={styles.streakContainer}
+          >
+            <Image
+              source={require('../../assets/FireImage.png')}
+              style={{ width: 26, height: 26 }}
+            />
+            <Text style={styles.streakText}>1</Text>
+          </LinearGradient>
         </View>
       </View>
       
@@ -295,7 +283,7 @@ export default function HomeScreen() {
                   textShadowOffset: { width: 0, height: 1 },
                   textShadowRadius: 2,
                 }}>
-                  A new story awaits.
+                  Chose one fr.
                 </Text>
               </LinearGradient>
             </LinearGradient>
@@ -517,3 +505,26 @@ export default function HomeScreen() {
     </SafeAreaView>
   );
 } 
+
+const styles = StyleSheet.create({
+  streakShadow: {
+    backgroundColor: '#995000',
+    borderRadius: 16,
+  },
+  streakContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingVertical: 8,
+    paddingHorizontal: 14,
+    borderRadius: 16,
+    borderWidth: 1,
+    borderColor: 'rgba(255, 149, 0, 0.5)',
+    transform: [{ translateY: -4 }],
+  },
+  streakText: {
+    color: '#FFFFFF',
+    fontWeight: 'bold',
+    marginLeft: 8,
+    fontSize: 16
+  }
+}); 

@@ -44,6 +44,12 @@ export default function RootLayout() {
                                 animationDuration: 800,
                             }}
                         />
+                        <Stack.Screen
+                            name="onboarding/username"
+                            options={{
+                                headerShown: false,
+                            }}
+                        />
                     </Stack>
                 </GlobalProvider>
             </GestureHandlerRootView>

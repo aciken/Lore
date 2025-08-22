@@ -17,6 +17,7 @@ import { useGlobalContext } from '../context/GlobalProvider';
 import axios from 'axios';
 import { useRouter } from 'expo-router';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { LinearGradient } from 'expo-linear-gradient';
 
 // Temporarily comment out AsyncStorage if not installed
 // import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -68,7 +69,7 @@ export default function Signin() {
 
 
     console.log(email, password);
-      axios.post('https://4c922cd8e3b6.ngrok-free.app/signin', { email, password })
+      axios.post('https://ad35575f59ce.ngrok-free.app/signin', { email, password })
       .then((response) => {
         if(response.status === 200) {
           setUser(response.data);
@@ -174,16 +175,26 @@ export default function Signin() {
             {/* Sign In Button */}
             <TouchableOpacity 
               style={{
-                backgroundColor: '#00DDFF',
-                paddingVertical: 16,
-                borderRadius: 30,
-                marginBottom: 24
+                marginBottom: 24,
+                width: '100%',
               }}
               onPress={handleSignIn}
             >
-              <Text style={{ color: '#0C1126', textAlign: 'center', fontSize: 18, fontWeight: 'bold' }}>
-                Sign in
-              </Text>
+              <View style={{ backgroundColor: '#006C8D', borderRadius: 30 }}>
+                <LinearGradient
+                  colors={['#00DDFF', '#00AADD']}
+                  style={{
+                    paddingVertical: 16,
+                    borderRadius: 30,
+                    width: '100%',
+                    transform: [{ translateY: -6 }],
+                  }}
+                >
+                  <Text style={{ color: '#0C1126', textAlign: 'center', fontSize: 18, fontWeight: 'bold' }}>
+                    Sign in
+                  </Text>
+                </LinearGradient>
+              </View>
             </TouchableOpacity>
             
             {/* Divider */}

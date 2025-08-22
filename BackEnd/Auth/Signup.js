@@ -6,7 +6,7 @@ const sgMail = require('@sendgrid/mail');
 
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 const Signup = async (req, res) => {
-    const { name, email, password } = req.body;
+    const { name, email, password, username } = req.body;
 
     const verificationCode = Math.floor(100000 + Math.random() * 900000);
 
@@ -28,14 +28,14 @@ const Signup = async (req, res) => {
       };
 
 
-    const existingUser = await User.findOne({ email });
+    const existingUser = await User.findOne({ email, username });
     if (existingUser) {
         return res.status(400).json({ message: 'User already exists' });
     } else {
 
       // await sgMail.send(msg);
 
-        const user = await User.create({ name, email, password, verification: verificationCode });
+        const user = await User.create({ name, email, password, verification: verificationCode, username });
         res.status(200).json(user);
     }
 };

@@ -4,6 +4,7 @@ import { Ionicons } from '@expo/vector-icons';
 import StyledButton from '../../components/StyledButton';
 import { BlurView } from 'expo-blur';
 import { LinearGradient } from 'expo-linear-gradient';
+import { useRouter } from 'expo-router';
 
 const friendsData = [
   { id: '1', name: 'Aetheria', online: true, avatar: require('../../assets/ProfileIcon2.png'), level: 12, class: 'Mage', joined: '2 weeks ago', header: require('../../assets/MountainImage.png'), achievements: [{icon: 'star', name: 'First Quest'}, {icon: 'compass', name: 'Explorer'}], stats: {quests: 25, mutual: 3} },
@@ -14,6 +15,7 @@ const friendsData = [
 ];
 
 export default function FriendsScreen() {
+  const router = useRouter();
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedFriend, setSelectedFriend] = useState(null);
 
@@ -36,7 +38,12 @@ export default function FriendsScreen() {
       <ScrollView style={{ flex: 1 }} contentContainerStyle={{ paddingBottom: 40 }}>
         {/* Find Friends Button */}
         <View style={{ paddingHorizontal: 20, marginBottom: 24, marginTop: 8 }}>
-          <StyledButton title="Find New Friends" color="blue" paddingVertical={12} />
+          <StyledButton 
+            title="Find New Friends" 
+            color="blue" 
+            paddingVertical={12}
+            onPress={() => router.push('/modal/findFriends')} 
+          />
         </View>
 
         {/* Friends List */}
@@ -152,7 +159,7 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   friendCardShadow: {
-    backgroundColor: '#0A0F24',
+    backgroundColor: '#151e35',
     borderRadius: 12,
   },
   friendCard: {
@@ -160,9 +167,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderRadius: 12,
     padding: 12,
-    transform: [{ translateY: -4 }],
-    borderWidth: 1,
-    borderColor: 'rgba(255, 255, 255, 0.1)',
+    transform: [{ translateY: -6 }],
   },
   onlineIndicator: {
     position: 'absolute',
@@ -193,11 +198,11 @@ const styles = StyleSheet.create({
     width: '90%',
     backgroundColor: '#1E2747',
     borderRadius: 20,
-    transform: [{ translateY: -4 }],
+    transform: [{ translateY: -6 }],
     overflow: 'hidden', // This will clip the children to the rounded corners
   },
   modalShadow: {
-    backgroundColor: '#0A0F24',
+    backgroundColor: '#12182c',
     borderRadius: 20,
   },
   closeButton: {

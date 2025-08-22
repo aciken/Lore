@@ -1,11 +1,12 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, SafeAreaView, StatusBar, ScrollView, TouchableOpacity, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
+import { router } from 'expo-router';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useGlobalContext } from '../context/GlobalProvider';
 
 const userData = {
-  name: 'Lore Master',
-  handle: '@loreMaster',
   joinDate: 'Joined June 2024',
   stats: {
     courses: 5,
@@ -18,6 +19,14 @@ const userData = {
     league: 'No current League',
     top3: 12,
   },
+  achievements: [
+    { icon: 'star', name: 'First Quest' },
+    { icon: 'compass', name: 'Explorer' },
+    { icon: 'people', name: 'Team Player' },
+    { icon: 'hammer', name: 'Master Crafter' },
+    { icon: 'rocket', name: 'Speed Runner' },
+    { icon: 'key', name: 'Treasure Hunter' },
+  ],
 };
 
 const StatBox = ({ icon, value, label, iconColor = '#00DDFF' }) => (
@@ -38,13 +47,15 @@ const StatBox = ({ icon, value, label, iconColor = '#00DDFF' }) => (
 );
 
 export default function ProfileScreen() {
+  const { user } = useGlobalContext();
+
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar barStyle="light-content" />
       <ScrollView contentContainerStyle={styles.scrollViewContent}>
         {/* Header */}
         <View style={styles.header}>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => router.push('/modal/settings')}>
             <Ionicons name="settings-outline" size={24} color="#B3B8C8" />
           </TouchableOpacity>
         </View>
@@ -56,8 +67,8 @@ export default function ProfileScreen() {
                 <Ionicons name="person-outline" size={60} color="#00DDFF" />
              </View>
           </View>
-          <Text style={styles.name}>{userData.name}</Text>
-          <Text style={styles.handle}>{userData.handle} • {userData.joinDate}</Text>
+          <Text style={styles.name}>{user?.name || 'User'}</Text>
+          <Text style={styles.handle}>@{user?.username || 'username'} • {userData.joinDate}</Text>
         </View>
 
         {/* Main Stats */}
@@ -95,9 +106,13 @@ export default function ProfileScreen() {
           </TouchableOpacity>
           <TouchableOpacity>
             <View style={styles.buttonShadow}>
-              <View style={[styles.buttonBase, styles.iconButton]}>
+              <LinearGradient
+                  colors={['#2A3959', '#1E2747']}
+                  start={{ x: 0, y: 0 }}
+                  end={{ x: 1, y: 1 }}
+                  style={[styles.buttonBase, styles.iconButton]}>
                   <Ionicons name="arrow-up-outline" size={24} color="#FFFFFF" />
-              </View>
+              </LinearGradient>
             </View>
           </TouchableOpacity>
         </View>
@@ -113,14 +128,15 @@ export default function ProfileScreen() {
           </View>
         </View>
         
-        {/* Friend Streaks */}
+        {/* Achievements */}
         <View style={styles.sectionContainer}>
-          <Text style={styles.sectionTitle}>Friend Streaks</Text>
-          <View style={styles.streaksContainer}>
-            {[...Array(5)].map((_, i) => (
-              <TouchableOpacity key={i} style={styles.streakCircle}>
-                <Ionicons name="add-outline" size={24} color="#B3B8C8" />
-              </TouchableOpacity>
+          <Text style={styles.sectionTitle}>Achievements</Text>
+          <View style={styles.achievementsContainer}>
+            {userData.achievements.map((ach, index) => (
+              <View key={index} style={styles.achievementChip}>
+                <Ionicons name={ach.icon} size={14} color="#FFCC00" style={{ marginRight: 6 }} />
+                <Text style={styles.achievementText}>{ach.name}</Text>
+              </View>
             ))}
           </View>
         </View>
@@ -202,11 +218,11 @@ const styles = StyleSheet.create({
     marginBottom: 32,
   },
   buttonShadow: {
-    backgroundColor: '#0A0F24',
+    backgroundColor: '#151e35',
     borderRadius: 12,
   },
   buttonBase: {
-    transform: [{ translateY: -4 }],
+    transform: [{ translateY: -6 }],
     borderRadius: 12,
     alignItems: 'center',
     justifyContent: 'center',
@@ -243,14 +259,16 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   statBoxShadow: {
-    backgroundColor: '#0A0F24',
+    backgroundColor: '#151e35',
     borderRadius: 16,
   },
   statBoxContent: {
     borderRadius: 16,
     padding: 16,
     alignItems: 'flex-start',
-    transform: [{ translateY: -4 }],
+    transform: [{ translateY: -6 }],
+    borderWidth: 1,
+    borderColor: 'rgba(255, 255, 255, 0.1)',
   },
   statBoxValue: {
     color: '#FFFFFF',
@@ -261,18 +279,23 @@ const styles = StyleSheet.create({
     color: '#B3B8C8',
     fontSize: 14,
   },
-  streaksContainer: {
+  achievementsContainer: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    flexWrap: 'wrap',
   },
-  streakCircle: {
-    width: 50,
-    height: 50,
-    borderRadius: 25,
-    borderWidth: 2,
-    borderColor: 'rgba(179, 184, 200, 0.2)',
-    borderStyle: 'dashed',
-    justifyContent: 'center',
+  achievementChip: {
+    flexDirection: 'row',
     alignItems: 'center',
+    backgroundColor: 'rgba(0, 221, 255, 0.1)',
+    borderRadius: 16,
+    paddingVertical: 6,
+    paddingHorizontal: 10,
+    marginRight: 8,
+    marginBottom: 8,
+  },
+  achievementText: {
+    color: '#00DDFF',
+    fontSize: 12,
+    fontWeight: 'bold',
   },
 });

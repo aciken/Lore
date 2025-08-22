@@ -107,19 +107,28 @@ export default function WelcomePage() {
             Your app's description goes here. Highlight main features and benefits.
           </Text>
           
-          <Link href="/modal/signup" asChild>
+          <Link href="/onboarding/username" asChild>
             <TouchableOpacity 
               style={{
-                backgroundColor: '#00DDFF',
                 width: '100%',
-                paddingVertical: 16,
-                borderRadius: 30,
                 marginBottom: 16,
               }}
             >
-              <Text style={{ color: '#0C1126', textAlign: 'center', fontSize: 18, fontWeight: 'bold' }}>
-                Get Started
-              </Text>
+              <View style={{ backgroundColor: '#006C8D', borderRadius: 30 }}>
+                <LinearGradient
+                  colors={['#00DDFF', '#00AADD']}
+                  style={{
+                    width: '100%',
+                    paddingVertical: 16,
+                    borderRadius: 30,
+                    transform: [{ translateY: -6 }],
+                  }}
+                >
+                  <Text style={{ color: '#0C1126', textAlign: 'center', fontSize: 18, fontWeight: 'bold' }}>
+                    Get Started
+                  </Text>
+                </LinearGradient>
+              </View>
             </TouchableOpacity>
           </Link>
           

@@ -30,11 +30,14 @@ export default function AdventureDetails() {
         <Text style={{ color: '#B3B8C8', fontSize: 16, textAlign: 'center', marginTop: 4 }}>{adventure.section}</Text>
       </LinearGradient>
       
-      <ScrollView contentContainerStyle={{ alignItems: 'center', paddingVertical: 40 }}>
+      <ScrollView contentContainerStyle={{ paddingHorizontal: 20, paddingVertical: 40, alignItems: 'center' }}>
         {adventure.quests.map((quest, index) => {
           const isLocked = quest.status === 'locked';
           const isActive = quest.status === 'active';
           const isCompleted = quest.status === 'completed';
+
+          const positions = [0, 80, -20, 100, 20, -60, 50];
+          const translateX = positions[index % positions.length];
 
           return (
             <TouchableOpacity
@@ -56,18 +59,16 @@ export default function AdventureDetails() {
                 alignItems: 'center',
                 marginBottom: 30,
                 opacity: isLocked && !isActive ? 0.5 : 1,
+                transform: [{ translateX: translateX }],
               }}
             >
               {isActive ? (
                 <Image source={require('../../assets/buttonBlueToday.png')} style={{ width: 80, height: 80 }} />
               ) : isLocked ? (
-                <Image source={require('../../assets/buttonFinish.png')} style={{ width: 80, height: 80 }} />
+                <Image source={require('../../assets/buttonDisabeled.png')} style={{ width: 80, height: 80 }} />
               ) : (
-                <Image source={require('../../assets/buttonBlueBefore.png')} style={{ width: 80, height: 80 }} />
+                <Image source={require('../../assets/buttonEmpty5.png')} style={{ width: 80, height: 80 }} />
               )}
-              <Text style={{ color: '#FFFFFF', fontWeight: 'bold', marginTop: 8, fontSize: 16 }}>
-                {quest.title}
-              </Text>
             </TouchableOpacity>
           );
         })}

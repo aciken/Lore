@@ -10,7 +10,7 @@ export default function CustomTabBar() {
     { 
       name: 'Home', 
       path: '/home', 
-      iconPath: require('../assets/HomeIcon2.png'),
+      iconPath: require('../assets/compasImage2.png'),
       ionIcon: 'home'
     },
     { 
@@ -36,10 +36,8 @@ export default function CustomTabBar() {
       flexDirection: 'row', 
       justifyContent: 'space-around', 
       alignItems: 'center', 
-      backgroundColor: '#1E2747', 
+      backgroundColor: '#0C1126', 
       paddingVertical: 12,
-      borderTopWidth: 1,
-      borderTopColor: '#2A3455',
     }}>
       {tabs.map((tab) => {
         const isActive = pathname === tab.path;
